@@ -1,0 +1,315 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>GLA User Verification PRD</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: coloured hero band, then sections on a single reading column; the flow is a vertical coloured stepper. */
+:root{
+  --bg:#f6f7fd;--surface:#ffffff;--fg:#1d1f3a;--muted:#5b5f85;--line:#e2e4f4;
+  --indigo:#4f46e5;--indigo-soft:#e8e7fd;
+  --teal:#0d9488;--teal-soft:#d9f5f1;
+  --amber:#d97706;--amber-soft:#fdf0d5;
+  --rose:#e11d48;--rose-soft:#fde4ea;
+  --violet:#7c3aed;--violet-soft:#efe5fd;
+  --code-bg:#1e1b4b;--code-fg:#e0e7ff;
+  --hero1:#4f46e5;--hero2:#7c3aed;--hero3:#db2777;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12132a;--surface:#1b1d3b;--fg:#eceefe;--muted:#a3a8d6;--line:#2e3162;
+  --indigo:#8b87ff;--indigo-soft:#2a2866;
+  --teal:#2dd4bf;--teal-soft:#0f3a3a;
+  --amber:#fbbf24;--amber-soft:#43320d;
+  --rose:#fb7185;--rose-soft:#4a1626;
+  --violet:#b794f6;--violet-soft:#33225e;
+  --code-bg:#0c0d22;--code-fg:#e0e7ff;
+  --hero1:#3730a3;--hero2:#5b21b6;--hero3:#9d174d;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12132a;--surface:#1b1d3b;--fg:#eceefe;--muted:#a3a8d6;--line:#2e3162;
+  --indigo:#8b87ff;--indigo-soft:#2a2866;
+  --teal:#2dd4bf;--teal-soft:#0f3a3a;
+  --amber:#fbbf24;--amber-soft:#43320d;
+  --rose:#fb7185;--rose-soft:#4a1626;
+  --violet:#b794f6;--violet-soft:#33225e;
+  --code-bg:#0c0d22;--code-fg:#e0e7ff;
+  --hero1:#3730a3;--hero2:#5b21b6;--hero3:#9d174d;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;text-wrap:balance;line-height:1.2;margin:0}
+.hero{background:linear-gradient(120deg,var(--hero1),var(--hero2) 55%,var(--hero3));color:#fff;
+  padding-block:44px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:900px;margin:0 auto}
+.hero .tag{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:4px 12px;border-radius:99px;margin-bottom:14px}
+.hero h1{font-size:clamp(28px,5vw,44px);font-weight:700}
+.hero p{margin:12px 0 0;max-width:62ch;opacity:.92}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.meta span{background:rgba(255,255,255,.16);padding:4px 12px;border-radius:99px;font-size:13px}
+main{padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{margin-top:40px}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sh .n{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;font:700 15px "Space Grotesk",sans-serif}
+.sh h2{font-size:clamp(21px,3vw,27px)}
+.c1 .n{background:var(--indigo)}.c2 .n{background:var(--rose)}.c3 .n{background:var(--teal)}
+.c4 .n{background:var(--violet)}.c5 .n{background:var(--amber)}.c6 .n{background:var(--indigo)}
+.c7 .n{background:var(--teal)}.c8 .n{background:var(--rose)}.c9 .n{background:var(--violet)}
+p{margin:0 0 12px;max-width:72ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.callout{border-radius:12px;padding:14px 18px;margin:0 0 16px;max-width:none}
+.callout.rose{background:var(--rose-soft)}.callout.amber{background:var(--amber-soft)}
+.callout.teal{background:var(--teal-soft)}.callout.indigo{background:var(--indigo-soft)}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;padding:0;list-style:none;margin:0}
+.goals li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;min-width:0}
+.goals li:nth-child(5n+1){border-top:4px solid var(--indigo)}.goals li:nth-child(5n+2){border-top:4px solid var(--rose)}
+.goals li:nth-child(5n+3){border-top:4px solid var(--teal)}.goals li:nth-child(5n+4){border-top:4px solid var(--amber)}
+.goals li:nth-child(5n){border-top:4px solid var(--violet)}
+/* flow */
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding-bottom:18px}
+.step:not(:last-child)::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:var(--line)}
+.dot{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 14px "Space Grotesk",sans-serif;z-index:1}
+.sb{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.sb b{font-family:"Space Grotesk",sans-serif;font-size:16px}
+.sb p{margin:4px 0 0;font-size:15px;color:var(--muted)}
+.branch{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{border-radius:8px;padding:6px 10px;font-size:14px;min-width:0}
+.pill.stop{background:var(--rose-soft)}.pill.go{background:var(--teal-soft)}.pill.warn{background:var(--amber-soft)}
+.pill strong{margin-right:4px}
+.bg-indigo{background:var(--indigo)}.bg-violet{background:var(--violet)}.bg-amber{background:var(--amber)}
+.bg-rose{background:var(--rose)}.bg-teal{background:var(--teal)}
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:16px}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 14px;vertical-align:top;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{background:var(--indigo-soft);font-family:"Space Grotesk",sans-serif;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+td.id{font-family:"Space Grotesk",sans-serif;font-weight:700;color:var(--indigo);white-space:nowrap}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--teal-soft);color:var(--teal)}
+.badge.should{background:var(--amber-soft);color:var(--amber)}
+code{font:13.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--violet-soft);color:var(--violet);padding:1px 6px;border-radius:6px}
+pre{background:var(--code-bg);color:var(--code-fg);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:0 0 16px;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace}
+pre code{background:none;color:inherit;padding:0}
+.lbl{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:15px;margin:18px 0 8px;color:var(--indigo)}
+ol.verify{counter-reset:v;list-style:none;padding:0;margin:0 0 16px;display:grid;gap:8px}
+ol.verify li{counter-increment:v;display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:0}
+ol.verify li::before{content:counter(v);flex:none;width:26px;height:26px;border-radius:8px;background:var(--teal);color:#fff;display:grid;place-items:center;font:700 13px "Space Grotesk",sans-serif}
+ul.items{padding-left:0;list-style:none;display:grid;gap:10px;margin:0 0 16px}
+ul.items li{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--indigo);border-radius:10px;padding:10px 14px;min-width:0}
+ul.items li:nth-child(4n+2){border-left-color:var(--teal)}ul.items li:nth-child(4n+3){border-left-color:var(--amber)}ul.items li:nth-child(4n){border-left-color:var(--rose)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.roll{display:grid;gap:8px;padding:0;margin:0;list-style:none;counter-reset:r}
+.roll li{counter-increment:r;display:flex;gap:12px;align-items:flex-start}
+.roll li::before{content:counter(r);flex:none;width:26px;height:26px;border-radius:50%;background:var(--violet);color:#fff;display:grid;place-items:center;font:700 13px "Space Grotesk",sans-serif}
+footer{text-align:center;color:var(--muted);font-size:13px;padding-bottom:32px}
+
+.fd{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
+.fd svg{display:block;min-width:660px;width:100%;height:auto;font-family:Inter,system-ui,sans-serif}
+.fd .t{text-anchor:middle;fill:var(--fg);font-size:13px}.fd .t.b{font-weight:600;font-size:14px}.fd .t.s{fill:var(--muted);font-size:12px}
+.fd .n-ind{fill:var(--indigo-soft);stroke:var(--indigo);stroke-width:2}
+.fd .n-vio{fill:var(--violet-soft);stroke:var(--violet);stroke-width:2}
+.fd .n-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:2}
+.fd .n-rose{fill:var(--rose-soft);stroke:var(--rose);stroke-width:2}
+.fd .n-amb{fill:var(--amber-soft);stroke:var(--amber);stroke-width:2}
+.fd .dia{fill:var(--amber-soft);stroke:var(--amber);stroke-width:2.5}
+.fd .ln{stroke:var(--muted);stroke-width:2}.fd .ahp{fill:var(--muted)}
+.fd .lab{fill:var(--muted);font-size:12px;font-weight:600;text-anchor:middle}
+.fd .bd-ind{fill:var(--indigo)}.fd .bd-vio{fill:var(--violet)}.fd .bd-teal{fill:var(--teal)}
+.fd .bn{fill:#fff;font-weight:700;font-size:13px;text-anchor:middle}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+</style>
+
+<header class="hero"><div class="wrap">
+  <span class="tag">Product requirements</span>
+  <h1>GLA User Verification API for Support Automation</h1>
+  <p>Before any reply is drafted, check that the sender is a real, active GLA user. Everyone else is stopped before the AI step and before a draft exists.</p>
+  <div class="meta"><span>17 Nov 2026</span><span>Prajeesh P</span><span>academy@greatlearning.in</span></div>
+</div></header>
+
+<main><div class="wrap">
+
+<section class="c1">
+  <div class="sh"><span class="n">1</span><h2>Overview</h2></div>
+  <p>Before the support automation drafts any reply, it checks through an API that the sender is a real, active GLA user. Only verified senders continue through the flow.</p>
+  <p>Today every new email in academy@greatlearning.in is classified by the AI and gets a draft. Nothing checks who the sender is, so anyone outside GLA can send bulk or scam mail and fill the mailbox with drafts, using up AI calls and n8n executions. This PRD covers the verification step and the API behind it, up to the point where n8n receives the API result.</p>
+</section>
+
+<section class="c2">
+  <div class="sh"><span class="n">2</span><h2>Problem and goals</h2></div>
+  <div class="callout rose"><p style="margin:0"><b>The problem.</b> The current system is vulnerable to cyber attack. Anyone looking for a loophole can send a large number of scam emails from many different accounts. Every one is classified by the LLM and gets a draft, so an attacker can burn AI budget and flood the mailbox. Nothing checks that the sender is a real GLA learner.</p></div>
+  <div class="lbl">Goals</div>
+  <ul class="goals">
+    <li>Only emails from verified GLA users produce drafts.</li>
+    <li>Block unregistered senders and temporary email accounts before the AI step.</li>
+    <li>Verify senders in batches of 10, so API calls stay low.</li>
+    <li>Return one clear yes/no per email, so n8n needs no extra decision logic.</li>
+    <li>Stop and alert the owner at 100 or more distinct senders in 2 hours.</li>
+    <li>Create one draft reply per learner. Further messages are handled manually.</li>
+    <li>Skip any user who sends more than 10 emails in 24 hours.</li>
+  </ul>
+</section>
+
+<section class="c3">
+  <div class="sh"><span class="n">3</span><h2>Scope</h2></div>
+  <p>This PRD covers everything up to the API result: how n8n collects sender addresses, the verification API, and what n8n does with the answer.</p>
+  <div class="callout teal"><p style="margin:0"><b>After the API call, the rest of the process stays as already built in n8n.</b> For a verified sender, n8n extracts the learner details, the AI classifies the email, the standard reply is built, a draft is created in the academy mailbox, a copy is forwarded to the owner where the rules require it, and the row is logged in the tracking sheet. Emails forwarded by internal mailboxes keep their current handling; only the learner's address is verified. One draft reply per learner; further messages are handled manually.</p></div>
+</section>
+
+<section class="c4">
+  <div class="sh"><span class="n">4</span><h2>Proposed flow</h2></div>
+  <p>Only an email whose sender passes the check reaches the existing flow. If the API fails, no email goes through unchecked.</p>
+  <div class="fd"><svg viewBox="0 0 860 760" role="img" aria-label="Flow: email arrives, extract learner email, volume check, verification API, valid user check, heavy sender check, existing n8n flow">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" class="ahp"/></marker></defs>
+<rect x="150" y="20" width="300" height="56" rx="12" class="n-ind"/><text x="300.0" y="44.0" class="t b">Email arrives</text><text x="300.0" y="63.0" class="t s">Checked every 2 hours</text><line x1="300" y1="76" x2="300" y2="104" class="ln" marker-end="url(#ah)"/><rect x="150" y="104" width="300" height="56" rx="12" class="n-ind"/><text x="300.0" y="128.0" class="t b">Extract learner email</text><text x="300.0" y="147.0" class="t s">Sender, or learner if forwarded</text><line x1="300" y1="160" x2="300" y2="188" class="ln" marker-end="url(#ah)"/><polygon points="300,188.0 450.0,236 300,284.0 150.0,236" class="dia"/><text x="300" y="233" class="t b">100+ distinct</text><text x="300" y="252" class="t b">senders?</text><line x1="450" y1="236" x2="540" y2="236" class="ln" marker-end="url(#ah)"/><text x="495" y="226" class="lab">Yes</text><rect x="540" y="206" width="300" height="60" rx="12" class="n-rose"/><text x="690.0" y="232.0" class="t b">Stop and alert</text><text x="690.0" y="251.0" class="t s">No API call, no drafts. Email owner</text><line x1="300" y1="284" x2="300" y2="312" class="ln" marker-end="url(#ah)"/><text x="312" y="304" class="lab">No</text><rect x="150" y="312" width="300" height="76" rx="12" class="n-vio" stroke-dasharray="6 4"/><text x="300.0" y="346.0" class="t b">Verification API</text><text x="300.0" y="365.0" class="t s">Batches of 10. In users table,</text><line x1="450" y1="350" x2="540" y2="350" class="ln" marker-end="url(#ah)"/><text x="495" y="340" class="lab">Error</text><rect x="540" y="320" width="300" height="60" rx="12" class="n-amb" stroke-dasharray="6 4"/><text x="690.0" y="346.0" class="t b">Retry 3 times</text><text x="690.0" y="365.0" class="t s">Then hold emails and alert owner</text><line x1="300" y1="388" x2="300" y2="416" class="ln" marker-end="url(#ah)"/><polygon points="300,416.0 450.0,464 300,512.0 150.0,464" class="dia"/><text x="300" y="461" class="t b">Valid</text><text x="300" y="480" class="t b">user?</text><line x1="450" y1="464" x2="540" y2="464" class="ln" marker-end="url(#ah)"/><text x="495" y="454" class="lab">No</text><rect x="540" y="434" width="300" height="60" rx="12" class="n-rose"/><text x="690.0" y="460.0" class="t b">No draft created</text><text x="690.0" y="479.0" class="t s">Label "Not verified", log in Rejected</text><line x1="300" y1="512" x2="300" y2="540" class="ln" marker-end="url(#ah)"/><text x="312" y="532" class="lab">Yes</text><polygon points="300,540.0 450.0,588 300,636.0 150.0,588" class="dia"/><text x="300" y="585" class="t b">Over 10 emails</text><text x="300" y="604" class="t b">in 24 hours?</text><line x1="450" y1="588" x2="540" y2="588" class="ln" marker-end="url(#ah)"/><text x="495" y="578" class="lab">Yes</text><rect x="540" y="558" width="300" height="60" rx="12" class="n-rose"/><text x="690.0" y="584.0" class="t b">Skip this user</text><text x="690.0" y="603.0" class="t s">No drafts, flagged in Rejected</text><line x1="300" y1="636" x2="300" y2="664" class="ln" marker-end="url(#ah)"/><text x="312" y="656" class="lab">No</text><rect x="150" y="664" width="300" height="76" rx="12" class="n-teal" stroke-dasharray="6 4"/><text x="300.0" y="698.0" class="t b">Existing n8n flow</text><text x="300.0" y="717.0" class="t s">Classify, build reply, create draft,</text><circle cx="150" cy="20" r="13" class="bd-ind"/><text x="150" y="25" class="bn">1</text><circle cx="150" cy="104" r="13" class="bd-ind"/><text x="150" y="109" class="bn">2</text><circle cx="150" cy="312" r="13" class="bd-vio"/><text x="150" y="317" class="bn">4</text><circle cx="150" cy="664" r="13" class="bd-teal"/><text x="150" y="669" class="bn">5</text></svg></div>
+<div class="legend"><span><i style="background:var(--indigo)"></i>Collect</span><span><i style="background:var(--amber)"></i>Decision</span><span><i style="background:var(--violet)"></i>API</span><span><i style="background:var(--rose)"></i>Stopped</span><span><i style="background:var(--teal)"></i>Continues</span></div>
+</section>
+
+<section class="c5">
+  <div class="sh"><span class="n">5</span><h2>Functional requirements</h2></div>
+  <p>The API returns one answer per email, <code>is_gla_user</code>, with <code>is_active</code> and <code>is_temp</code> to explain it.</p>
+  <div class="lbl">How the API verifies an email</div>
+  <ol class="verify">
+    <li><span>Cleans the address (trims spaces, lowercase). A badly formed address returns <code>is_gla_user</code> = false.</span></li>
+    <li><span>Looks the address up in the <code>passes_users</code> table of the website database. If it is not there, the result is false.</span></li>
+    <li><span>Checks the <code>params</code> table for website activity in the last 7 days and sets <code>is_active</code>. No activity means false.</span></li>
+    <li><span>Checks whether the address is a temporary email and sets <code>is_temp</code>. If true, the result is false even when an account exists. The API rejects these itself, for safety.</span></li>
+    <li><span>Only an address in <code>passes_users</code> with <code>is_active</code> true and <code>is_temp</code> false returns <code>is_gla_user</code> = true.</span></li>
+  </ol>
+  <div class="tw"><table>
+    <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+    <tr><td class="id">FR1</td><td>Accept 1 to 10 email addresses per call. A call with more than 10 or none is rejected with a clear error.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR2</td><td>Clean each address: trim spaces, lowercase, check the format. A badly formed address returns <code>is_gla_user</code> = false.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR3</td><td>Mark an address as a GLA user only if it is present in the <code>passes_users</code> table.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR4</td><td>Count only users with website activity in the last 7 days, checked in the <code>params</code> table.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR5</td><td>Detect temporary emails: set <code>is_temp</code> = true and return <code>is_gla_user</code> = false, even when a GLA account exists.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR6</td><td>Return four fields per address: <code>email</code>, <code>is_gla_user</code>, <code>is_active</code>, <code>is_temp</code>. n8n uses <code>is_gla_user</code> to decide.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR7</td><td>Set <code>is_active</code> from 7 days of <code>params</code> activity and <code>is_temp</code> from the email domain, so n8n can log why an address was rejected.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR8</td><td>Return a result for every address sent, in the same order, including duplicates.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR9</td><td>Be read-only and safe to repeat: same input, same answer, nothing changed.</td><td><span class="badge">Must</span></td></tr>
+    <tr><td class="id">FR10</td><td>Return only the four fields. No other learner data.</td><td><span class="badge should">Should</span></td></tr>
+  </table></div>
+</section>
+
+<section class="c6">
+  <div class="sh"><span class="n">6</span><h2>API specification</h2></div>
+  <p>One endpoint, called by n8n once per batch of up to 10 emails. The name and path are proposals for the API team to confirm.</p>
+  <div class="tw"><table>
+    <tr><th>Item</th><th>Proposal</th></tr>
+    <tr><td><b>Endpoint</b></td><td><code>POST /v1/users/verify</code></td></tr>
+    <tr><td><b>Authentication</b></td><td>Secret API key for the n8n service, sent in a request header, over HTTPS only</td></tr>
+    <tr><td><b>Network</b></td><td>Reachable only from n8n's IP addresses (allowlist)</td></tr>
+    <tr><td><b>Batch size</b></td><td>1 to 10 emails per call</td></tr>
+    <tr><td><b>Response time</b></td><td>Under 1.5 seconds for a batch of 10 (95% of calls)</td></tr>
+  </table></div>
+  <div class="two">
+    <div><div class="lbl">Request</div>
+<pre><code>{
+  "emails": [
+    "learner@example.com",
+    "someone@tempmail.example"
+  ]
+}</code></pre></div>
+    <div><div class="lbl">Response (200)</div>
+<pre><code>{
+  "results": [
+    { "email": "learner@example.com",
+      "is_gla_user": true,
+      "is_active": true, "is_temp": false },
+    { "email": "olduser@example.com",
+      "is_gla_user": false,
+      "is_active": false, "is_temp": false },
+    { "email": "someone@tempmail.example",
+      "is_gla_user": false,
+      "is_active": true, "is_temp": true },
+    { "email": "unknown@example.com",
+      "is_gla_user": false,
+      "is_active": false, "is_temp": false }
+  ]
+}</code></pre></div>
+  </div>
+  <div class="tw"><table>
+    <tr><th>Field</th><th>Meaning</th></tr>
+    <tr><td><code>email</code></td><td>The address that was checked, cleaned (spaces removed, lowercase).</td></tr>
+    <tr><td><code>is_gla_user</code></td><td>The final answer n8n uses. True only if the address is in <code>passes_users</code>, <code>is_active</code> is true and <code>is_temp</code> is false.</td></tr>
+    <tr><td><code>is_active</code></td><td>True if the user has website activity in the last 7 days (from <code>params</code>). False if no activity or the address is not found.</td></tr>
+    <tr><td><code>is_temp</code></td><td>True if the address is a temporary (disposable) email.</td></tr>
+  </table></div>
+</section>
+
+<section class="c7">
+  <div class="sh"><span class="n">7</span><h2>n8n integration</h2></div>
+  <p>The check sits right after the Gmail trigger and before the AI step, so an unverified email costs no AI call, no draft and no forward.</p>
+  <ul class="items">
+    <li><b>Batching.</b> The Gmail trigger checks every 2 hours; its per-check limit is raised from 10 so none are missed. Sender addresses go out in batches of 10, one API call each. Drafts appear up to 2 hours after an email arrives. A duplicate address is sent once.</li>
+    <li><b>Which address is checked.</b> The sender for a normal email. For mail forwarded by an internal mailbox (info@, contact@, legal@, olympus.oncall@), the learner's address from the forwarded text.</li>
+    <li><b>Verified.</b> The email continues into the existing flow unchanged.</li>
+    <li><b>Not verified.</b> The flow stops for that email: no draft, no forward. n8n adds a Gmail label (for example "Not verified") and a row to a "Rejected" tab with the address, subject and API flags, without the body, so the team can review wrongly blocked learners.</li>
+    <li><b>API down or slow.</b> n8n fails closed: no drafts for that batch. It retries up to 3 times, then holds the emails (unlabelled, picked up on the next run) and alerts the owner. Emails are never lost or drafted without verification.</li>
+    <li><b>Cost.</b> One API call per batch of up to 10, not one per email.</li>
+    <li><b>Heavy sender block.</b> If one address sends more than 10 emails in 24 hours, that user is skipped for the next 24 hours and flagged in the Rejected tab.</li>
+  </ul>
+  <div class="lbl">Batching examples</div>
+  <div class="tw"><table>
+    <tr><th>Emails in 2 hours</th><th>Batches</th><th>API calls</th></tr>
+    <tr><td>0</td><td>none</td><td>0</td></tr>
+    <tr><td>1 to 10</td><td>1</td><td>1</td></tr>
+    <tr><td>11</td><td>2 (10 and 1)</td><td>2</td></tr>
+    <tr><td>25</td><td>3 (10, 10 and 5)</td><td>3</td></tr>
+  </table></div>
+  <p>Every email is checked and none is dropped; each continues or stops on its own <code>is_gla_user</code> result. If no email arrives in the 2 hours, nothing runs: no API call, no AI call, no draft. The next check is 2 hours later.</p>
+  <div class="callout amber"><p style="margin:0"><b>Volume guard.</b> If 100 or more distinct sender addresses arrive in one 2-hour check, the system stops. n8n makes no API or AI call, creates no drafts and leaves the emails untouched. It emails prajeesh.p@greatlearning.in the number of distinct senders, the time of the check and the most common sender domains, with no email content. The owner reviews the mail (for example a spam flood), removes it, and re-runs the check. The limit of 100 is a starting value and should be adjustable in n8n.</p></div>
+</section>
+
+<section class="c8">
+  <div class="sh"><span class="n">8</span><h2>Edge cases and rules</h2></div>
+  <div class="callout rose"><p style="margin:0">The biggest risk is blocking real learners who write from an address they did not register with, or who have not visited the website in the last 7 days. Every rejection is logged for review.</p></div>
+  <div class="tw"><table>
+    <tr><th>Case</th><th>Rule</th></tr>
+    <tr><td>Learner writes from an address not registered with GLA</td><td>Not verified: no draft. Logged in the Rejected tab for review.</td></tr>
+    <tr><td>Temporary email registered in GLA</td><td>Not valid: the API returns <code>is_gla_user</code> = false, even though the account exists.</td></tr>
+    <tr><td>No website activity in the last 7 days</td><td>Not valid: <code>is_gla_user</code> = false.</td></tr>
+    <tr><td>Capital letters, extra spaces</td><td>Cleaned before the check, so they do not cause a mismatch.</td></tr>
+    <tr><td>Plus-addresses (name+tag@gmail.com) and aliases</td><td>To be decided with the API team.</td></tr>
+    <tr><td>Email forwarded by an internal mailbox</td><td>The learner's address from the forwarded text is verified. If none is found, it goes to the owner for manual handling, as today.</td></tr>
+    <tr><td>Automatic mail and no-reply addresses</td><td>Fail verification, so they no longer reach the AI.</td></tr>
+    <tr><td>Spoofed "From" address of a real learner</td><td>The API alone cannot catch this. n8n should also require that Gmail's sender checks (SPF/DKIM) passed.</td></tr>
+    <tr><td>Same address sending many emails</td><td>One draft per learner; further messages are handled manually. More than 10 emails in 24 hours: the user is skipped and flagged.</td></tr>
+  </table></div>
+</section>
+
+<section class="c9">
+  <div class="sh"><span class="n">9</span><h2>Success metrics, testing and rollout</h2></div>
+  <p>The feature is a success when no draft is created for an unverified sender and fewer than 2% of real learners are wrongly blocked.</p>
+  <div class="two">
+    <div class="card"><div class="lbl" style="margin-top:0">Metrics</div>
+      <ul style="margin:0;padding-left:18px">
+        <li>Drafts created for unverified senders: 0.</li>
+        <li>Real learners wrongly rejected: under 2% of rejections, checked weekly in the Rejected tab.</li>
+        <li>API calls that fail: under 1%.</li>
+        <li>AI calls and n8n executions saved on rejected mail: reported weekly.</li>
+      </ul></div>
+    <div class="card"><div class="lbl" style="margin-top:0">Rollout</div>
+      <ol class="roll">
+        <li>Build and test the API with the API team, using test accounts.</li>
+        <li>Shadow mode for one week: n8n calls the API and logs the result but still drafts every email.</li>
+        <li>Turn on enforcement once shadow results are acceptable.</li>
+        <li>Review the Rejected tab weekly for the first month, then monthly.</li>
+      </ol></div>
+  </div>
+  <div class="lbl">Test cases</div>
+  <ul class="items">
+    <li>A registered learner active in the last 7 days: <code>is_gla_user</code> = true.</li>
+    <li>An address not in GLA: false.</li>
+    <li>A temporary email with a GLA account: false.</li>
+    <li>A user with no website activity in the last 7 days: false.</li>
+    <li>A batch of 10, a batch of 11 (error), and an empty batch (error).</li>
+    <li>Duplicates, capital letters and extra spaces in one batch.</li>
+    <li>API unavailable: no drafts, retries happen, emails are held and the owner is alerted.</li>
+    <li>A forwarded email: the learner's address is checked, not info@.</li>
+    <li>A learner who sends a second message: no second draft; the team handles it manually.</li>
+    <li>A user with 11 emails in 24 hours: the user is skipped and flagged.</li>
+  </ul>
+</section>
+
+</div></main>
+<footer>GLA User Verification API · PRD · 17 Nov 2026</footer>
+
+</body></html>
